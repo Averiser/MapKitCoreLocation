@@ -10,6 +10,8 @@ class ViewController: UIViewController {
   var placesViewController: PlaceScrollViewController?
   var locationManager: CLLocationManager?
   var previousLocation: CLLocation?
+  var places: [InterestingPlace] = []
+  var selectedPlace: InterestingPlace? = nil
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -20,6 +22,12 @@ class ViewController: UIViewController {
     locationManager = CLLocationManager()
     locationManager?.delegate = self
     locationManager?.desiredAccuracy = kCLLocationAccuracyHundredMeters
+    
+    selectedPlace = places.first
+    updateUI()
+    placesViewController?.addPlaces(places: places)
+    
+    placesViewController?.delegate = self
   }
 
   override func didReceiveMemoryWarning() {
@@ -54,11 +62,17 @@ class ViewController: UIViewController {
             let latitude = property["Latitude"] as? NSNumber,
             let longitude = property["Longitude"] as? NSNumber,
             let image = property["Image"] as? String else { fatalError("Error reading data") }
-      print("name: \(name)")
-      print("latitude: \(latitude)")
-      print("longitude: \(longitude)")
-      print("image: \(image)")
+      
+      let place = InterestingPlace(latitude: latitude.doubleValue, longitude: longitude.doubleValue, name: name, imageName: image)
+      places.append(place)
     }
+  }
+  
+  private func updateUI() {
+    placeName.text = selectedPlace?.name
+    guard let imageName = selectedPlace?.imageName,
+          let image = UIImage(named: imageName) else {return}
+    placeImage.image = image
   }
   
   private func loadPlist() -> [[String: Any]]? {
@@ -94,7 +108,15 @@ extension ViewController: CLLocationManagerDelegate {
       print("Distance in meters: \(distanceInMeters)")
       previousLocation = latest
     }
-    
+      
   }
   
+}
+
+extension ViewController: PlaceScrollViewControllerDelegate {
+  func selectedPlaceViewController(_ controller: PlaceScrollViewController, didSelectPlace place: InterestingPlace) {
+    
+    selectedPlace = place
+    updateUI()
+  }
 }

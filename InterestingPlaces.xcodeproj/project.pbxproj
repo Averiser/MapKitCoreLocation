@@ -14,6 +14,7 @@
 		D377478C1CB6835700641F78 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D377478B1CB6835700641F78 /* Assets.xcassets */; };
 		D377478F1CB6835700641F78 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D377478D1CB6835700641F78 /* LaunchScreen.storyboard */; };
 		D37747991CB69E3B00641F78 /* Places.plist in Resources */ = {isa = PBXBuildFile; fileRef = D37747981CB69E3B00641F78 /* Places.plist */; };
+		E4623D1A278503FA00A8EC4E /* InterestingPlace.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4623D19278503FA00A8EC4E /* InterestingPlace.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		D377478E1CB6835700641F78 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D37747901CB6835700641F78 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D37747981CB69E3B00641F78 /* Places.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Places.plist; sourceTree = "<group>"; };
+		E4623D19278503FA00A8EC4E /* InterestingPlace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterestingPlace.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 				D37747901CB6835700641F78 /* Info.plist */,
 				D37747981CB69E3B00641F78 /* Places.plist */,
 				D30AC51D216E4C9E00033D1D /* PlaceScrollViewController.swift */,
+				E4623D19278503FA00A8EC4E /* InterestingPlace.swift */,
 			);
 			path = InterestingPlaces;
 			sourceTree = "<group>";
@@ -110,6 +113,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -144,6 +148,7 @@
 			files = (
 				D37747871CB6835700641F78 /* ViewController.swift in Sources */,
 				D30AC51E216E4C9E00033D1D /* PlaceScrollViewController.swift in Sources */,
+				E4623D1A278503FA00A8EC4E /* InterestingPlace.swift in Sources */,
 				D37747851CB6835700641F78 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
