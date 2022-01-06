@@ -9,7 +9,7 @@ class ViewController: UIViewController {
   @IBOutlet weak var placeImage: UIImageView!
   var placesViewController: PlaceScrollViewController?
   var locationManager: CLLocationManager?
-  var previousLocation: CLLocation?
+  var currentLocation: CLLocation?
   var places: [InterestingPlace] = []
   var selectedPlace: InterestingPlace? = nil
   
@@ -73,6 +73,13 @@ class ViewController: UIViewController {
     guard let imageName = selectedPlace?.imageName,
           let image = UIImage(named: imageName) else {return}
     placeImage.image = image
+    
+    guard let currentLocation = currentLocation,
+          let distanceInMeters = selectedPlace?.location.distance(from: currentLocation) else { return }
+    let distance = Measurement(value: distanceInMeters, unit: UnitLength.meters)
+    let miles = distance.converted(to: .miles)
+    
+    locationDistance.text = "\(miles)"
   }
   
   private func loadPlist() -> [[String: Any]]? {
@@ -100,14 +107,16 @@ extension ViewController: CLLocationManagerDelegate {
   
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
     
-    if previousLocation == nil {
-      previousLocation = locations.first
-    } else {
-      guard let latest = locations.first else { return }
-      let distanceInMeters = previousLocation?.distance(from: latest) ?? 0
-      print("Distance in meters: \(distanceInMeters)")
-      previousLocation = latest
-    }
+    currentLocation = locations.first
+    
+//    if currentLocation == nil {
+//      currentLocation = locations.first
+//    } else {
+//      guard let latest = locations.first else { return }
+//      let distanceInMeters = currentLocation?.distance(from: latest) ?? 0
+//      print("Distance in meters: \(distanceInMeters)")
+//      currentLocation = latest
+//    }
       
   }
   
