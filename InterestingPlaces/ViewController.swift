@@ -22,7 +22,7 @@ class ViewController: UIViewController {
     locationManager = CLLocationManager()
     locationManager?.delegate = self
     locationManager?.desiredAccuracy = kCLLocationAccuracyHundredMeters
-    
+    locationManager?.allowsBackgroundLocationUpdates = true
     selectedPlace = places.first
     updateUI()
     placesViewController?.addPlaces(places: places)
@@ -45,12 +45,12 @@ class ViewController: UIViewController {
       activateLocationServices()
         
     } else {
-      locationManager?.requestWhenInUseAuthorization()
+      locationManager?.requestAlwaysAuthorization()
     }
   }
   
   private func activateLocationServices() {
-    locationManager?.startUpdatingLocation()
+    locationManager?.requestLocation()
   }
   
   func loadPlaces() {
@@ -105,9 +105,14 @@ extension ViewController: CLLocationManagerDelegate {
     }
   }
   
+  func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+    print(error.localizedDescription)
+  }
+  
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
     
     currentLocation = locations.first
+    print(currentLocation)
     
 //    if currentLocation == nil {
 //      currentLocation = locations.first
