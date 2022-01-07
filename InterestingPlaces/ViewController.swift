@@ -7,11 +7,14 @@ class ViewController: UIViewController {
   @IBOutlet weak var placeName: UILabel!
   @IBOutlet weak var locationDistance: UILabel!
   @IBOutlet weak var placeImage: UIImageView!
+  @IBOutlet weak var address: UILabel!
+  
   var placesViewController: PlaceScrollViewController?
   var locationManager: CLLocationManager?
   var currentLocation: CLLocation?
   var places: [InterestingPlace] = []
   var selectedPlace: InterestingPlace? = nil
+  lazy var geocoder = CLGeocoder()
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -80,6 +83,26 @@ class ViewController: UIViewController {
     let miles = distance.converted(to: .miles)
     
     locationDistance.text = "\(miles)"
+    printAddress()
+  }
+  
+  private func printAddress() {
+    guard let selectedPlace = selectedPlace else {return}
+    geocoder.reverseGeocodeLocation(selectedPlace.location) {
+      [weak self] (placemarks, error) in
+      if let error = error {
+        print(error.localizedDescription)
+        return
+      }
+      guard let placemark = placemarks?.first else {return}
+      if let streetNumber = placemark.subThoroughfare,
+         let street =  placemark.thoroughfare,
+         let city = placemark.locality,
+         let state = placemark.administrativeArea {
+        self?.address.text = "\(streetNumber) \(street) \(city), \(state)"
+      }
+    }
+
   }
   
   private func loadPlist() -> [[String: Any]]? {
