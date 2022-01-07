@@ -105,6 +105,19 @@ class ViewController: UIViewController {
 
   }
   
+  private func geocodeLocation() {
+    guard let selectedPlace = selectedPlace else { return }
+    
+  }
+  
+  private func printLocationDetails() {
+    placeName.text = selectedPlace?.name
+    guard let imageName = selectedPlace?.imageName,
+      let image = UIImage(named:imageName) else { return }
+    placeImage.image = image
+    self.address.text = selectedPlace?.address
+  }
+  
   private func loadPlist() -> [[String: Any]]? {
     guard let plistUrl = Bundle.main.url(forResource: "Places", withExtension: "plist"),
       let plistData = try? Data(contentsOf: plistUrl) else { return nil }
